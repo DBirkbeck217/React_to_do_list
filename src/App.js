@@ -55,6 +55,12 @@ class App extends React.Component {
       })
     );
   };
+
+  handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      this.handleAddToDo();
+    }
+  };
   render() {
     return (
       <div>
@@ -70,6 +76,7 @@ class App extends React.Component {
           <input
             value={this.state.newToDoTitle}
             onChange={this.handleOnChange}
+            onKeyPress={this.handleKeyPress}
           ></input>
           <button onClick={this.handleAddToDo}> Add </button>
         </div>

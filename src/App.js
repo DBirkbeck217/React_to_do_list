@@ -3,26 +3,24 @@ import "./App.css";
 import TodoItem from "./Components/TodoItem.js";
 import Sidebar from "./Components/Sidebar.js";
 import avatar from "./Images/avatar.png";
+import shortid from "shortid";
 
 class App extends React.Component {
   state = {
     todoList: [
       {
-        id: 1,
+        id: shortid.generate(),
         title: "Learn to code in React",
-        description: "your description",
         completed: false,
       },
       {
-        id: 2,
+        id: shortid.generate(),
         title: "Take over the world",
-        description: "your description",
         completed: false,
       },
       {
-        id: 3,
+        id: shortid.generate(),
         title: "Take out the trash",
-        description: "your description",
         completed: false,
       },
     ],
@@ -39,21 +37,16 @@ class App extends React.Component {
 
   handleAddToDo = () => {
     let newToDo = {
-      id: 0,
+      id: shortid.generate(),
       title: this.state.newToDoTitle,
-      description: "your description",
       completed: false,
     };
-    this.setState(
-      (state) => {
-        return {
-          todoList: [...state.todoList, newToDo],
-        };
-      },
-      this.setState({
+    this.setState((state) => {
+      return {
+        todoList: [...state.todoList, newToDo],
         newToDoTitle: "",
-      })
-    );
+      };
+    });
   };
 
   handleKeyPress = (event) => {
@@ -62,14 +55,15 @@ class App extends React.Component {
     }
   };
   render() {
+    console.log(this.state);
     return (
       <div>
         <div id="avatar">
           <Sidebar user={this.state.user}></Sidebar>
         </div>
-        <h1> To-Do List</h1>
+        <h1> To-Do List </h1>
         {this.state.todoList.map((todo) => (
-          <TodoItem todo={todo}></TodoItem>
+          <TodoItem key={todo.id} todo={todo}></TodoItem>
         ))}
         <br />
         <div className="input">

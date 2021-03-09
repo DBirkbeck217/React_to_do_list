@@ -11,7 +11,7 @@ class App extends React.Component {
       {
         id: shortid.generate(),
         title: "Learn to code in React",
-        completed: false,
+        completed: true,
       },
       {
         id: shortid.generate(),
@@ -49,21 +49,57 @@ class App extends React.Component {
     });
   };
 
+  handleDeleteToDo = (id) => {
+    this.setState((state) => {
+      const filteredToDos = state.todoList.filter((todo) => {
+        if (todo.id === id) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      return {
+        todoList: filteredToDos,
+      };
+    });
+  };
+
+  handleCheckToDo = (id) => {
+    this.setState((state) => {
+      const filteredToDos = state.todoList.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed: !todo.completed };
+        } else {
+          return todo;
+        }
+      });
+      return {
+        todoList: filteredToDos,
+      };
+    });
+  };
+
   handleKeyPress = (event) => {
     if (event.key === "Enter") {
       this.handleAddToDo();
     }
   };
+
   render() {
-    console.log(this.state);
+    let title = "To Do List";
     return (
       <div>
         <div id="avatar">
           <Sidebar user={this.state.user}></Sidebar>
         </div>
-        <h1> To-Do List </h1>
+        <h1>{title}</h1>
         {this.state.todoList.map((todo) => (
-          <TodoItem key={todo.id} todo={todo}></TodoItem>
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onDeleteToDo={this.handleDeleteToDo}
+            onCheckToDo={this.handleCheckToDo}
+          ></TodoItem>
         ))}
         <br />
         <div className="input">

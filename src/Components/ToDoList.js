@@ -15,7 +15,7 @@ class ToDoList extends React.Component {
       },
       {
         id: shortid.generate(),
-        title: "Take over the world",
+        title: "Take over the galaxy",
         completed: false,
         description: "self explanatory",
       },
